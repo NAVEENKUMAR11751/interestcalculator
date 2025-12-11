@@ -142,7 +142,6 @@
 
         document.getElementById('interest-form').addEventListener('submit', function(event) {
             event.preventDefault();
-
             const principal = parseFloat(document.getElementById('principal').value);
             const rate = parseFloat(document.getElementById('rate').value);
             const time = parseFloat(document.getElementById('time').value);
@@ -155,9 +154,9 @@
                 const interest = monthlyInterest * time;
                 const total_after_interest= principal + interest;
 
-                document.getElementById('principleamount').innerText = `Principle Amount: ₹${principal.toFixed(2)}`;
-                document.getElementById('interestresult').innerText = `Simple Interest: ₹${interest.toFixed(2)}`;
-                document.getElementById('totalamount').innerText = `Total Amount After Interest: ₹${total_after_interest.toFixed(2)}`;
+                document.getElementById('principleamount').innerText = "Principle Amount: ₹ " + principal.toFixed(2);
+                document.getElementById('interestresult').innerText = "Simple Interest: ₹ " + interest.toFixed(2);
+                document.getElementById('totalamount').innerText = "Total Amount After Interest: ₹ " + total_after_interest.toFixed(2);
             }            
             else if(mode === "compound"){     // compound interest calculation
                 let actual_principal = principal;
@@ -165,9 +164,9 @@
                     actual_principal += (actual_principal/100) * rate;
                 }
                 let compound_interest =  actual_principal - principal;
-                document.getElementById('principleamount').innerText = `Principle Amount: ₹${principal.toFixed(2)}`;
-                document.getElementById('interestresult').innerText = `Compound Interest: ₹${compound_interest.toFixed(2)}`;
-                document.getElementById('totalamount').innerText = `Total After Compound Interest: ₹${actual_principal.toFixed(2)}`;
+                document.getElementById('principleamount').innerText = "Principle Amount: ₹ " + principal.toFixed(2);
+                document.getElementById('interestresult').innerText = "Compound Interest: ₹ " + compound_interest.toFixed(2);
+                document.getElementById('totalamount').innerText = "Total After Compound Interest: ₹ " + actual_principal.toFixed(2);
             }
             else{
                 alert("Please select a valid mode.");
