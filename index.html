@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body{
+        font-family: Arial, sans-serif;
+        background-color: #f3f7ff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1{
+        color: #003366;
+        margin-top: 30px;
+        text-shadow: 1px 1px 2px #999;
+    }
+
+    form{
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        width: 350px;
+        margin-top: 20px;
+    }
+
+    label{
+        font-size: 18px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    input[type="number"]{
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #003366;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    input[type="submit"]{
+        width: 100%;
+        padding: 12px;
+        border: none;
+        background-color: #003366;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    input[type="submit"]:hover{
+        background-color: #0055aa;
+        letter-spacing: 1px;
+    }
+
+    h2{
+        margin-top: 10px;
+        color: #004080;
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    /* Tabs */
+    .tabs{
+        display:flex;
+        gap:10px;
+        margin-top:20px;
+    }
+    .tab-btn{
+        padding:10px 20px;
+        background:#003366;
+        color:white;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+        font-weight:bold;
+    }
+    .tab-btn.active{
+        background:#0077ff;
+    }
+
+</style>
+    <title>Interest Calculator</title>
+</head>
+<body>
+    <h1>Interest Calculator</h1>
+
+    <div class="tabs">
+        <button class="tab-btn active" id="simpleTab">Simple Interest</button>
+        <button class="tab-btn" id="compoundTab">Compound Interest</button>
+    </div>
+
+    <form id="interest-form">
+        <label for="principal">Principal Amount:</label>
+        <input type="number" id="principal" name="principal" required><br><br>
+
+        <label for="rate">Interest in rupees per month :</label>
+        <input type="number" id="rate" name="rate" step="0.01" required><br><br>
+
+        <label for="time">Time (months):</label>
+        <input type="number" id="time" name="time" required><br><br>
+
+        <input type="submit" value="Calculate Interest">
+    </form>
+
+    <h2 id="principleamount"></h2>
+    <h2 id="interestresult"></h2>
+    <h2 id="totalamount"></h2>
+
+
+
+    <script>
+
+        let mode = "simple";
+
+        document.getElementById("simpleTab").onclick = function(){
+            mode="simple";       
+            this.classList.add("active");
+            document.getElementById("compoundTab").classList.remove("active");
+        
+            
+        };
+
+        document.getElementById("compoundTab").onclick = function(){
+            mode="compound";
+            this.classList.add("active");
+            document.getElementById("simpleTab").classList.remove("active");
+        };
+
+        document.getElementById('interest-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const principal = parseFloat(document.getElementById('principal').value);
+            const rate = parseFloat(document.getElementById('rate').value);
+            const time = parseFloat(document.getElementById('time').value);
+
+
+           
+
+            if(mode === "simple"){          // simple interest calculation
+                 const monthlyInterest = (principal/100) * rate;
+                const interest = monthlyInterest * time;
+                const total_after_interest= principal + interest;
+
+                document.getElementById('principleamount').innerText = "Principle Amount: ₹ " + principal.toFixed(2);
+                document.getElementById('interestresult').innerText = "Simple Interest: ₹ " + interest.toFixed(2);
+                document.getElementById('totalamount').innerText = "Total Amount After Interest: ₹ " + total_after_interest.toFixed(2);
+            }            
+            else if(mode === "compound"){     // compound interest calculation
+                let actual_principal = principal;
+                for(let i=1;i<=time;i++){
+                    actual_principal += (actual_principal/100) * rate;
+                }
+                let compound_interest =  actual_principal - principal;
+                document.getElementById('principleamount').innerText = "Principle Amount: ₹ " + principal.toFixed(2);
+                document.getElementById('interestresult').innerText = "Compound Interest: ₹ " + compound_interest.toFixed(2);
+                document.getElementById('totalamount').innerText = "Total After Compound Interest: ₹ " + actual_principal.toFixed(2);
+            }
+            else{
+                alert("Please select a valid mode.");
+            }
+
+        });
+    </script>
+    
+</body>
+</html>
